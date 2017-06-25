@@ -1,0 +1,45 @@
+const BloggerConstants = {
+    // High level App States
+    STATE_HOME_LOGGEDOUT : "HomeLoggedOutState",
+    STATE_LOGIN          : "LoginState",
+    STATE_SIGNUP         : "SignupState",
+    STATE_HOME_LOGGEDIN  : "HomeLoggedInState",
+    STATE_HOME_LOGGEDIN_ALLBLOGS  : "HomeLoggedInStateAllBlogs",
+    STATE_HOME_SEARCHRESULTS : "HomeSearchResults",
+    STATE_PROFILE_UPDATE : "ProfileUpdateState",
+    STATE_NEW_BLOG       : "NewBlogState",
+    STATE_VIEW_BLOG      : "ViewBlogState",
+
+    // Login status values
+    LOGIN_STATUS_SUCCESS : "LoginStatusSuccess",
+    LOGIN_STATUS_FAILURE : "LoginStatusFailure",
+    LOGIN_STATUS_NONE    : "LoginStatusNone",
+    LOGIN_STATUS_REQESTED: "LoginStatusRequested",
+
+    //Navbar onNavOptions
+    NAVBAR_HOME          : "NavbarHome",
+    NAVBAR_LOGIN         : "NavbarLogin",
+    NAVBAR_CREATE_BLOG   : "NavbarCreateBlog",
+    NAVBAR_UPDATE_PROFILE: "NavbarUpdateProfile",
+    NAVBAR_LOGOUT        : "NavbarLogOut",
+    NAVBAR_FILTER_MYBLOGS: "NavbarFilterMyBlogs",
+    NAVBAR_FILTER_ALLBLOGS: "NavbarFilterAllBlogs",
+    NAVBAR_SEARCH         :"NavbarSearch",
+
+    //NavBar configuration options
+    NAVBAR_SHOW_LOGGEDIN_OPTIONS : "NavbarShowLoggedInOptions",
+    NAVBAR_SHOW_LOGGEDOUT_OPTIONS : "NavbarShowLoggedOutOptions",
+    NAVBAR_SHOW_NO_OPTIONS : "NavbarShownNoOptions",
+
+    // User Login Reasons
+    LOGIN_TO_APP : "LoginToApp",
+    LOGIN_TO_ADDBLOG : "LoginToAddBlog",
+    LOGIN_TO_ADDCOMMENT : "LoginToAddComment",
+
+    // App configurations
+    BLOG_PAGESIZE : 3,
+    COMMENT_PAGESIZE : 3
+
+
+}
+export default BloggerConstants;
