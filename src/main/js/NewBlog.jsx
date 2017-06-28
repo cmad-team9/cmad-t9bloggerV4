@@ -67,7 +67,7 @@ class NewBlog extends React.Component {
 		console.log("New Blog render");
 		var style = {
 			marginLeft: "15%",
-			marginTop: "5%",
+			marginTop: "7%",
 			marginRight:"10%"
 		};
 		var headingStyle = {

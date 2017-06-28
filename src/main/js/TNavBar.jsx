@@ -99,7 +99,7 @@ class TNavBar extends React.Component {
 			<Navbar inverse collapseOnSelect fixedTop>
 				<Navbar.Header  >
 					<Navbar.Brand >
-						<a href="#"  onClick={this.onHomeSelect}>T9BloggerS</a>
+						<a href="#"  onClick={this.onHomeSelect}>T9BloggerJude</a>
 					</Navbar.Brand>
 					<Navbar.Toggle />
 				</Navbar.Header>

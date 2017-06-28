@@ -82,11 +82,11 @@ class UserProfile extends React.Component {
 
 	render() {
 		var style = {
-			marginTop: "5%",
+			//marginTop: "5%",
 			marginRight:"35%"
 		};
 		var headingStyle = {
-			marginTop: "5%",
+			marginTop: "7%",
 			textAlign:"center",
 			fontWeight:"bold"
 		}

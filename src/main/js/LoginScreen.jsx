@@ -83,7 +83,7 @@ this.props.onLoginDataReceived(loginData);
 render() {
   console.log("Login Screen");
   var style = {
-    marginTop:"5%",
+    marginTop:"7%",
     marginRight:"5%"
   };
   var signUpUrlStyle = {

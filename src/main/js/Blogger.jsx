@@ -46,7 +46,7 @@ class Blogger extends React.Component {
 		var userId = this.state.loggedInUserId;
 		console.log("updateProfileBtn profile userid :"+userId);
 		$.ajax({
-			url : 'rest/blogger/user/'+userId,
+			url : 'rest/blogger/users/'+userId,
 			type : 'get',
 			contentType: "application/json; charset=utf-8",
 			headers: {"AUTHORIZATION": window.sessionStorage.getItem('accessToken')},
@@ -72,7 +72,7 @@ class Blogger extends React.Component {
 
 	onUpdatedUserDataReceivedCB(userData) {
 		$.ajax({
-			url : 'rest/blogger/user',
+			url : 'rest/blogger/users',
 			type : 'put',
 			contentType: "application/json; charset=utf-8",
 			headers: {"AUTHORIZATION": window.sessionStorage.getItem('accessToken')},
@@ -105,7 +105,7 @@ class Blogger extends React.Component {
 		if(newUserData != null) {
 			console.log("Blogger onNewUserDataReceivedCB userId :"+newUserData.userDetails.userId);
 			$.ajax({
-				url : 'rest/blogger/user',
+				url : 'rest/blogger/users',
 				type : 'post',
 				contentType: "application/json; charset=utf-8",
 				success : function(data,textStatus, jqXHR) {
@@ -160,7 +160,7 @@ class Blogger extends React.Component {
 			console.log("Blogger onLoginDataReceivedCB password:"+userData.password);
 			$.ajax({
 				type: 'post',
-				url: 'rest/blogger/login',
+				url: 'rest/blogger/users/login',
 				contentType: "application/x-www-form-urlencoded; charset=utf-8",
 				data: userData,//$("#loginForm").serialize(), // serializes the form's elements.
 				success : function(data,textStatus, jqXHR) {
@@ -225,6 +225,7 @@ class Blogger extends React.Component {
 					console.log("BLOGGER NAVBAR_HOME  going to STATE_HOME_LOGGEDOUT");
 					nextAppState = BloggerConstants.STATE_HOME_LOGGEDOUT;
 				}
+				loginReason : BloggerConstants.LOGIN_TO_APP;
 				break;
 				case BloggerConstants.NAVBAR_SEARCH:
 							nextAppState = BloggerConstants.STATE_HOME_SEARCHRESULTS;

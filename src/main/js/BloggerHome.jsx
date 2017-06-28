@@ -16,7 +16,8 @@ class BloggerHome extends React.Component {
 			pagingOptionPrev : null,
 			pagingOptionNext : null,
 			pagingOptionLast : null,
-			showSpinner : false
+			showSpinner : false,
+			showNoBlogsMsg : false
 		};
 		this.fetchBlogs = this.fetchBlogs.bind(this);
 		this.handlePagingOption = this.handlePagingOption.bind(this);
@@ -58,7 +59,8 @@ class BloggerHome extends React.Component {
 				pagingOptionPrev : null,
 				pagingOptionNext : null,
 				pagingOptionLast : null,
-				showSpinner :true
+				showSpinner :true,
+				showNoBlogsMsg : false
 		});
 		$.ajax({
 			url : 'rest/blogger/blogs',
@@ -76,10 +78,21 @@ class BloggerHome extends React.Component {
 			}.bind(this),
 			error : function( jqXHR,textStatus, errorThrown ) {
 				console.log("fetchAllBlogs error callback :"+jqXHR+" textStatus:"+textStatus+" errorThrown:"+errorThrown);
+				this.setState({
+					showSpinner :false
+				});
 			}.bind(this),
 			complete : function( jqXHR, textStatus ) {
 				console.log("fetchAllBlogs complete callback");
-			}.bind(this)
+			}.bind(this),
+			statusCode: {
+				404: function() {
+					console.log("404 error");
+					this.setState({
+						showNoBlogsMsg :true
+					});
+				}.bind(this)
+			}
 		});
 
 	}
@@ -139,7 +152,8 @@ class BloggerHome extends React.Component {
 				pagingOptionPrev : null,
 				pagingOptionNext : null,
 				pagingOptionLast : null,
-				showSpinner :true
+				showSpinner :true,
+				showNoBlogsMsg : false
 		});
 		switch(event.target.name) {
 			case "first":
@@ -179,10 +193,21 @@ class BloggerHome extends React.Component {
 			}.bind(this),
 			error : function( jqXHR,textStatus, errorThrown ) {
 				console.log("blog pagination options error callback :"+jqXHR+" textStatus:"+textStatus+" errorThrown:"+errorThrown);
+				this.setState({
+					showSpinner :false
+				});
 			}.bind(this),
 			complete : function( jqXHR, textStatus ) {
 				console.log("blog pagination options complete callback");
-			}.bind(this)
+			}.bind(this),
+			statusCode: {
+				404: function() {
+					console.log("404 error");
+					this.setState({
+						showNoBlogsMsg :true
+					});
+				}.bind(this)
+			}
 			
 		});
 		
@@ -200,7 +225,11 @@ class BloggerHome extends React.Component {
 			marginLeft:"50%"
 		}
 		var pageStyle = {
-			marginTop:"5%"
+			marginTop:"7%"
+		}
+		var errorStyle ={
+			marginTop:"15%",
+			marginLeft:"35%"
 		}
 		var tempObj;
 		const blogDataToRender = this.state.blogData.map((item) => {
@@ -221,6 +250,11 @@ class BloggerHome extends React.Component {
 			pagingOptions.push(<a key="last" href="#" id="last" name="last" onClick={this.handlePagingOption}> Last  </a>);
 		}
 		var spinner;
+		var noBlogsFoundMsg;
+		if(this.state.showNoBlogsMsg === true){
+			console.log("sho msg");
+			noBlogsFoundMsg = <h1 style={errorStyle}>No blogs! Please create one..</h1>
+		}
 		if(this.state.showSpinner === true) {
 
 		 spinner = <div style={spinStyle} >
@@ -231,6 +265,7 @@ class BloggerHome extends React.Component {
 			<div style={pageStyle}>
 				{spinner}
 				{blogDataToRender}
+				{noBlogsFoundMsg}
 				<div id = "pagingOptions" style={paginationStyle}>
 					{pagingOptions}
 				</div>

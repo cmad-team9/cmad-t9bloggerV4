@@ -216,10 +216,14 @@ class BlogAndCommentsScrn extends React.Component {
 	render() {
 		console.log("Blog Display render&&");
 		var style = {
+			marginTop: "7%"
+		};
+		var commentStyle = {
 			//marginLeft: "10%",
 			//marginTop: "5%",
 			marginRight:"10%"
 		};
+		
 		var headingStyle = {
 			//textAlign:"left",
 			fontWeight:"bold",
@@ -289,9 +293,9 @@ class BlogAndCommentsScrn extends React.Component {
 			}
 
 			return (
-				<div >
+				<div style={style}>
 					<BlogDisplay blogData = {this.props.selectedBlogData} hideCommentOption={true}></BlogDisplay>
-					<div style={style}>
+					<div style={commentStyle}>
 						<h5 id ="commentHeading" style={headingStyle}>Comments</h5>
 						<Form inline style={selectStyle}>
 							<FormGroup controlId="formInlineSelect">

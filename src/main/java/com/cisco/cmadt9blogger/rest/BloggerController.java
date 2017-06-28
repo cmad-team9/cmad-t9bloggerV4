@@ -38,7 +38,7 @@ public class BloggerController {
 	
 
 	@POST
-	@Path("/user")
+	@Path("/users")
 	@Consumes(MediaType.APPLICATION_JSON) 
 	public Response signupNewUser(User user) {
 		System.out.println("BloggerController signupNewUser Userid :"+user.getUserId());
@@ -48,7 +48,7 @@ public class BloggerController {
 	}
 
 	@PUT
-	@Path("/user")
+	@Path("/users")
 	@Consumes(MediaType.APPLICATION_JSON) 
 	@RequireJWTToken
 	public Response updateUser(@HeaderParam("userId") String userId,User user) {
@@ -59,7 +59,7 @@ public class BloggerController {
 	}
 
 	@GET
-	@Path("/user/{userId}")
+	@Path("/users/{userId}")
 	@Produces(MediaType.APPLICATION_JSON) 
 	@RequireJWTToken
 	public Response getUserDetails(@PathParam("userId")String userId) {
@@ -69,7 +69,7 @@ public class BloggerController {
 	}
 
 	@POST
-	@Path("/login")
+	@Path("/users/login")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response loginUser(@FormParam("userId") String userId,@FormParam("password") String password) {
 		System.out.println("BloggerController loginUser userId :"+userId);
@@ -92,6 +92,25 @@ public class BloggerController {
 		System.out.println("Location Header :"+uriBuilder.build());
 	    return Response.created(uriBuilder.build()).build();
 	}
+	
+	@GET
+	@Path("/blogs")
+	@Produces(MediaType.APPLICATION_JSON) 
+	public Response getAllBlogs(@QueryParam("offset")@DefaultValue("0") int offset,
+			@QueryParam("pageSize")@DefaultValue("5") int pageSize,
+			@QueryParam("searchStr")String searchStr,	
+			@QueryParam("userFilter")String userFilter,		
+			@Context UriInfo uriInfo) {
+		System.out.println("BloggerController getAllBlogs offset:"+offset+" pageSize:"+pageSize);
+		System.out.println("BloggerController getAllBlogs searchStr:"+searchStr+" userFilter:"+userFilter);
+		System.out.println("uriInfo uri:"+uriInfo.getRequestUri());
+		UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
+		GenericEntity<List<Blog>> blogList = new GenericEntity<List<Blog>>(blogger.getAllBlogs(offset,pageSize,searchStr,userFilter)) {};
+		long totalCount = blogger.getBlogCount(searchStr,userFilter);
+		System.out.println("BloggerController getAllBlogs totalCount:"+totalCount);
+		System.out.println("BloggerController getAllBlogs link Header :"+PaginationUtil.getLinkHeaders(uriBuilder, offset, totalCount, pageSize));
+		return Response.ok().entity(blogList).header(LINK, PaginationUtil.getLinkHeaders(uriBuilder, offset, totalCount, pageSize)).build();
+	}
 
 	@GET
 	@Path("/blogs/{blogId}")
@@ -112,25 +131,7 @@ public class BloggerController {
 		return Response.ok().build();
 	}
 
-	@GET
-	@Path("/blogs")
-	@Produces(MediaType.APPLICATION_JSON) 
-	public Response getAllBlogs(@QueryParam("offset")@DefaultValue("0") int offset,
-			@QueryParam("pageSize")@DefaultValue("5") int pageSize,
-			@QueryParam("searchStr")String searchStr,	
-			@QueryParam("userFilter")String userFilter,		
-			@Context UriInfo uriInfo) {
-		System.out.println("BloggerController getAllBlogs offset:"+offset+" pageSize:"+pageSize);
-		System.out.println("BloggerController getAllBlogs searchStr:"+searchStr+" userFilter:"+userFilter);
-		System.out.println("uriInfo uri:"+uriInfo.getRequestUri());
-		UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
-		GenericEntity<List<Blog>> blogList = new GenericEntity<List<Blog>>(blogger.getAllBlogs(offset,pageSize,searchStr,userFilter)) {};
-		long totalCount = blogger.getBlogCount(searchStr,userFilter);
-		System.out.println("BloggerController getAllBlogs totalCount:"+totalCount);
-		System.out.println("BloggerController getAllBlogs link Header :"+PaginationUtil.getLinkHeaders(uriBuilder, offset, totalCount, pageSize));
-		return Response.ok().entity(blogList).header(LINK, PaginationUtil.getLinkHeaders(uriBuilder, offset, totalCount, pageSize)).build();
-	}
-
+	
 	@POST
 	@Path("/blogs/{blogId}/comments")
 	@Consumes(MediaType.APPLICATION_JSON) 
